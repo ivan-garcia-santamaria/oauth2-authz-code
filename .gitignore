@@ -1,2 +1,7 @@
 .env
+.env_agents
+.env_guuk
+.env_masmovil
+.env_yoigo
+.env_yoigo_apple
 node_modules
