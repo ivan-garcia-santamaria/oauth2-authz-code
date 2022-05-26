@@ -33,7 +33,7 @@ app.get('/get/the/code', (req, res) => {
     const Scope = process.env.SCOPE;
     const State = `${uuid.v1()}`;
 
-    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&state=${State}`;
+    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&state=${State}&groups_hint=pos`;
 
     log.info(url);
 
