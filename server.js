@@ -26,14 +26,14 @@ app.get('/', (req, res) => {
 //Set 1: Ask the authorization code
 app.get('/get/the/code', (req, res) => {
 
-    const Authorization_Endpoint = `https://${process.env.AUTHN_HOST}/oauth/authorize`;
+    const Authorization_Endpoint = `${process.env.AUTHN_HOST}/oauth/authorize`;
     const Response_Type = 'code';
     const Client_Id = process.env.CLIENT_ID;
     const Redirect_Uri = 'http://localhost:8000/give/me/the/code';
     const Scope = process.env.SCOPE;
     const State = `${uuid.v1()}`;
 
-    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&state=${State}&groups_hint=pos`;
+    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}`;
 
     log.info(url);
 
@@ -50,7 +50,7 @@ app.get('/give/me/the/code', (req, res) => {
 //Step 3: Exchange the code for a token
 app.post('/exchange/the/code/for/a/token', (req, res) => {
 
-    const Token_Endpoint = `https://${process.env.AUTHN_HOST}/oauth/token`;
+    const Token_Endpoint = `${process.env.AUTHN_HOST}/oauth/token`;
     const Grant_Type = 'authorization_code';
     const Code = req.body.code;
     const Redirect_Uri = 'http://localhost:8000/give/me/the/code';
@@ -83,7 +83,7 @@ app.post('/call/mas-stack', (req, res) => {
 
     let access_token = JSON.parse(req.body.token).access_token;
 
-    const Mas_stack_Endpoint = `https://${process.env.API_MAS_STACK}`;
+    const Mas_stack_Endpoint = `${process.env.API_MAS_STACK}`;
 
     //Call Mas-stack with your access token
     fetch(`${Mas_stack_Endpoint}`, {

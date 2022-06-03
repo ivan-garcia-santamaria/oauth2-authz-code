@@ -1,5 +1,6 @@
 .env
 .env_agents
+.env_agents_local
 .env_guuk
 .env_masmovil
 .env_yoigo
