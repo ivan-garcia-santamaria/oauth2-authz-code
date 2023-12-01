@@ -29,11 +29,11 @@ app.get('/get/the/code', (req, res) => {
     const Authorization_Endpoint = `${process.env.AUTHN_HOST}/oauth/authorize`;
     const Response_Type = 'code';
     const Client_Id = process.env.CLIENT_ID;
-    const Redirect_Uri = 'http://localhost:8000/give/me/the/code';
+    const Redirect_Uri = `http://${process.env.LOCAL_DOMAIN}:8000/give/me/the/code`;
     const Scope = process.env.SCOPE;
     const State = `${uuid.v1()}`;
 
-    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}`;
+    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}`;
 
     log.info(url);
 
@@ -43,8 +43,12 @@ app.get('/get/the/code', (req, res) => {
 
 //Step 2: Get the code from the URL
 app.get('/give/me/the/code', (req, res) => {
+    const Logout_Endpoint = `${process.env.AUTHN_HOST}/oauth/logout`;
+    const Client_Id = process.env.CLIENT_ID;
+
+    _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`http://${process.env.LOCAL_DOMAIN}:8000`)}&client_id=${Client_Id}`;
     //before continue, you should check that req.query.state is the same that the state you sent
-    res.render('exchange-code', { code: req.query.code, state: req.query.state });
+    res.render('exchange-code', { code: req.query.code, state: req.query.state, logout: _logout});
 });
 
 //Step 3: Exchange the code for a token
@@ -53,12 +57,13 @@ app.post('/exchange/the/code/for/a/token', (req, res) => {
     const Token_Endpoint = `${process.env.AUTHN_HOST}/oauth/token`;
     const Grant_Type = 'authorization_code';
     const Code = req.body.code;
-    const Redirect_Uri = 'http://localhost:8000/give/me/the/code';
+    const Redirect_Uri = `http://${process.env.LOCAL_DOMAIN}:8000/give/me/the/code`;
     const Client_Id = process.env.CLIENT_ID;
     const Client_Secret = process.env.CLIENT_SECRET;
     const Scope = process.env.SCOPE;
 
-    let body = `grant_type=${Grant_Type}&code=${Code}&redirect_uri=${encodeURIComponent(Redirect_Uri)}&client_id=${Client_Id}&client_secret=${Client_Secret}&scope=${encodeURIComponent(Scope)}`;
+    // let body = `grant_type=${Grant_Type}&code=${Code}&redirect_uri=${encodeURIComponent(Redirect_Uri)}&client_id=${Client_Id}&client_secret=${Client_Secret}&scope=${encodeURIComponent(Scope)}`;
+    let body = `grant_type=${Grant_Type}&code=${Code}&redirect_uri=${encodeURIComponent(Redirect_Uri)}&client_id=${Client_Id}&client_secret=${Client_Secret}`;
 
     log.info(`Body: ${body}`);
 
@@ -70,8 +75,13 @@ app.post('/exchange/the/code/for/a/token', (req, res) => {
         }
     }).then(async response => {
 
+        const Logout_Endpoint = `${process.env.AUTHN_HOST}/oauth/logout`;
+        const Client_Id = process.env.CLIENT_ID;
+    
+        _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`http://${process.env.LOCAL_DOMAIN}:8000`)}&client_id=${Client_Id}`;
+    
         let json = await response.json();
-        res.render('access-token', { token: JSON.stringify(json, undefined, 2) }); //you shouldn't share the access token with the client-side
+        res.render('access-token', { logout: _logout, token: JSON.stringify(json, undefined, 2) }); //you shouldn't share the access token with the client-side
 
     }).catch(error => {
         log.error(error.message);
@@ -97,4 +107,4 @@ app.post('/call/mas-stack', (req, res) => {
     });
 });
 
-app.listen(8000);
+app.listen(process.env.PORT || 8000);
