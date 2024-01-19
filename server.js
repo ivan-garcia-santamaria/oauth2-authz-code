@@ -3,6 +3,7 @@ const express = require('express'),
     bunyan = require('bunyan'),
     bodyParser = require('body-parser'),
     fetch = require("node-fetch");
+    axios = require('axios');
 
 //Load values from .env file
 require('dotenv').config();
@@ -24,20 +25,42 @@ app.get('/', (req, res) => {
 });
 
 //Set 1: Ask the authorization code
-app.get('/get/the/code', (req, res) => {
+app.get('/get/the/code', async (req, res) => {
 
     const Authorization_Endpoint = `${process.env.AUTHN_HOST}/oauth/authorize`;
     const Response_Type = 'code';
     const Client_Id = process.env.CLIENT_ID;
-    const Redirect_Uri = `http://${process.env.LOCAL_DOMAIN}:8000/give/me/the/code`;
+    const Redirect_Uri_Default = `http://${process.env.LOCAL_DOMAIN}:8000/give/me/the/code`;
     const Scope = process.env.SCOPE;
     const State = `${uuid.v1()}`;
+
+    log.info("redirect: " + process.env.REDIRECT_OVERRIDE)
+
+    if (process.env.REDIRECT_OVERRIDE === undefined) {
+        Redirect_Uri = Redirect_Uri_Default;
+    }else {
+        Redirect_Uri = process.env.REDIRECT_OVERRIDE;
+    }
 
     let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}`;
 
     log.info(url);
 
-    res.redirect(url);
+    const headers = {
+        'User-Identity-Forward-msisdn': process.env.NETWORK_MSISDN,
+    };
+
+    try {
+        const respuesta = await axios.get(url, { headers });
+
+        res.status(respuesta.status).send(respuesta.data);
+    } catch (error) {
+        console.error('Error en la solicitud de redirección:', error.message);
+        res.status(500).send('Error en la redirección');
+    }
+
+    // res.setHeader('User-Identity-Forward-msisdn', '34636606875'); // Añade la cabecera aquí
+    // res.redirect(url);
 
 });
 
