@@ -51,15 +51,14 @@ app.get('/get/the/code', async (req, res) => {
     };
 
     try {
-        const respuesta = await axios.get(url, { headers });
+        const respnse = await axios.get(url, { headers });
 
-        res.status(respuesta.status).send(respuesta.data);
+        res.status(respnse.status).send(respnse.data);
     } catch (error) {
-        console.error('Error en la solicitud de redirección:', error.message);
-        res.status(500).send('Error en la redirección');
+        console.error('redirect error:', error.message);
+        res.status(500).send('redirect error');
     }
 
-    // res.setHeader('User-Identity-Forward-msisdn', '34636606875'); // Añade la cabecera aquí
     // res.redirect(url);
 
 });
