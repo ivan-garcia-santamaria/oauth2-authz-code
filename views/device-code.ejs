@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Device Flow</title>
+    <style>
+        /* Estilo para el contenedor principal */
+        body {
+            font-family: 'Arial', sans-serif; 
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: black
+        }
+
+        /* Estilo para el contenedor principal */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        /* Estilo para el recuadro interior */
+        .content {
+            background-color: white; /* Fondo blanco */
+            padding: 20px; /* Espaciado interno */
+            border-radius: 10px; /* Bordes redondeados */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .user-code {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .verification-uri {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .instructions {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        /* Estilo para la parte izquierda */
+        .left {
+            flex: 1;
+            border-right: 1px solid #ddd; /* Add border to the right side */
+            text-align: center;
+        }
+
+        /* Estilo para la parte derecha */
+        .right {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        /* Estilo para el código QR */
+        #qr-code img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Contenido dentro del recuadro blanco -->
+        <div class="content">
+            <!-- Parte izquierda para el código QR -->
+            <div class="left">
+                <div id="qr-code">
+                    <img src="<%=jsonData.qr_code %>" alt="QR Code">
+                </div>
+            </div>
+
+            <!-- Parte derecha para la información -->
+            <div class="right">
+                <p class="user-code">User Code: <span id="user-code"><%=jsonData.user_code %></span></p>
+                <p class="instructions">Para iniciar sesión, vaya a la siguiente URL e ingrese el código de usuario:</p>
+                <p class="verification-uri"><a id="verification-uri" href="<%=jsonData.verification_uri %>"><%=jsonData.verification_uri %></a></p>
+                <p class="instructions">O puede visitar la siguiente URL directamente para iniciar sesión automáticamente:</p>
+                <p class="verification-uri"><a id="verification-uri-complete" href="<%=jsonData.verification_uri_complete %>"><%=jsonData.verification_uri_complete %></a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    // Función para verificar periódicamente el estado del dispositivo
+    function verificarEstadoDispositivo() {
+        setInterval(() => {
+            // Obtén el device_code de donde sea que lo estés almacenando en tu página
+            var deviceCode = '<%= jsonData.device_code %>'; // Asegúrate de obtenerlo correctamente
+
+            // Realiza una solicitud al nuevo endpoint para verificar el estado del dispositivo
+            fetch('/check-device?device_code=' + deviceCode)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.authn) {
+                        console.log(JSON.stringify(data.authn, undefined, 2))
+                        // Si se ha obtenido un token, redirigir a una nueva página
+                        window.location.href = '/token-page?authn=' + JSON.stringify(data.authn, undefined, 2);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al verificar el estado del dispositivo:', error);
+                });
+        }, 5000); // Verificar cada 5 segundos (puedes ajustar este valor según tus necesidades)
+    }
+
+    // Llama a la función para iniciar la verificación periódica del estado del dispositivo
+    verificarEstadoDispositivo();
+</script></html>

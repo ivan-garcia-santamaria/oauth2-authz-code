@@ -123,3 +123,8 @@ pre[class*="language-"] {
 	color: green;
 }
 
+.disabled-link {
+    pointer-events: none; /* Deshabilita los eventos del mouse */
+    opacity: 0.5; /* Puedes ajustar la opacidad para indicar que está deshabilitado */
+    text-decoration: none; /* Quita la subrayado del enlace */
+}

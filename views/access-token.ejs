@@ -69,10 +69,11 @@
                     <form action="/call/mas-stack" method="POST">
                         <div class="card-body">
                             <p class="card-text">This is your access token:</p>
-                            <pre class="language-json"><%= token %></pre>
+                            <pre class="language-json"><%= authn %></pre>
                             <input type="hidden" name="token" value="<%=token %>" />
                             <p class="card-text">You can now call Mas-stack API.</p>
                             <div class="text-center">
+                                <a href="/refresh_token?refresh_token=<%= refresh_token %>" class="btn btn-primary <%= disable_link %>">Refresh Token</a>
                                 <input type="submit" class="btn btn-primary" value="Call Mas-stack API" />
                             </div>
                         </div>

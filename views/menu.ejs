@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>OAuth 2.0 - Authorization Code Flow</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="jumbotron">
+            <h2 class="display-4">OAuth 2.0 - Authn Flows</h2>
+            <p class="lead">You need an Authn server to perform this flow.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Device Code Local</h5>
+                        <p class="card-text">Authenticates using device code locally.</p>
+                        <a href="/device-code?client_id=<%= device_code_local_client_id %>&client_secret=<%= device_code_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Device code flow</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Authz-code Local</h5>
+                        <p class="card-text">Authenticates using device code locally.</p>
+                        <a href="/authorize?client_id=<%= device_code_local_client_id %>&client_secret=<%= device_code_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Euskaltel LOCAL</h5>
+                        <p class="card-text">Authenticates using Euskaltel LOCAL.</p>
+                        <a href="/authorize?client_id=<%= euskaltel_local_client_id %>&client_secret=<%= euskaltel_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Device Code STA</h5>
+                        <p class="card-text">Authenticates using device code locally.</p>
+                        <a href="/device-code?client_id=<%= yoigo_sta_device_code_client_id %>&client_secret=<%= yoigo_sta_device_code_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Device code flow</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Device Code PROD</h5>
+                        <p class="card-text">Authenticates using device code locally.</p>
+                        <a href="/device-code?client_id=<%= yoigo_pro_device_code_client_id %>&client_secret=<%= yoigo_pro_device_code_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Device code flow</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Euskaltel DEV</h5>
+                        <p class="card-text">Authenticates using Euskaltel DEV.</p>
+                        <a href="/authorize?client_id=<%= euskaltel_dev_client_id %>&client_secret=<%= euskaltel_dev_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google DEV</h5>
+                        <p class="card-text">Authenticates using Google DEV.</p>
+                        <a href="/authorize?client_id=<%= google_dev_client_id %>&client_secret=<%= google_dev_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Euskaltel STA</h5>
+                        <p class="card-text">Authenticates using Euskaltel eCare STA.</p>
+                        <a href="/authorize?client_id=<%= euskaltel_sta_client_id %>&client_secret=<%= euskaltel_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Jazztel STA</h5>
+                        <p class="card-text">Authenticates using Euskaltel eCare STA.</p>
+                        <a href="/authorize?client_id=<%= jazztel_sta_client_id %>&client_secret=<%= jazztel_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google LOCAL</h5>
+                        <p class="card-text">Authenticates using Google LOCAL.</p>
+                        <a href="/authorize?client_id=<%= google_local_client_id %>&client_secret=<%= google_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google STA</h5>
+                        <p class="card-text">Authenticates using Google STA.</p>
+                        <a href="/authorize?client_id=<%= google_sta_client_id %>&client_secret=<%= google_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google PROD</h5>
+                        <p class="card-text">Authenticates using Google PRO.</p>
+                        <a href="/authorize?client_id=<%= google_pro_client_id %>&client_secret=<%= google_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Yoigo Truphone PROD</h5>
+                        <p class="card-text">Authenticates using Yoigo Truphone PRO.</p>
+                        <a href="/authorize?client_id=<%= yoigo_pro_client_id %>&client_secret=<%= yoigo_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Masmovil Ragnarok PROD</h5>
+                        <p class="card-text">Authenticates using Masmovil Ragnarok PRO.</p>
+                        <a href="/authorize?client_id=<%= masmovil_pro_client_id %>&client_secret=<%= masmovil_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">CIBA STA</h5>
+                        <p class="card-text">CIBA Flow using Yoigo.</p>
+                        <a href="/ciba?client_id=<%= yoigo_pro_client_id %>&client_secret=<%= yoigo_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">CIBA PROD</h5>
+                        <p class="card-text">CIBA Flow using Yoigo.</p>
+                        <a href="/ciba?client_id=<%= ciba_yoigo_pro_client_id %>&client_secret=<%= ciba_yoigo_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Ciba flow</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
