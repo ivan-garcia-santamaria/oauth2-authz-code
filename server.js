@@ -1,6 +1,8 @@
 //Modules
 const express = require('express'),
     bunyan = require('bunyan'),
+    https = require('https'),
+    fs = require('fs'),
     bodyParser = require('body-parser'),
     fetch = require("node-fetch");
     axios = require('axios');
@@ -28,10 +30,30 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
     res.render('menu',{ device_code_local_client_id: process.env.DEVICE_CODE_LOCAL_CLIENT_ID,
         device_code_local_client_secret: process.env.DEVICE_CODE_LOCAL_CLIENT_SECRET,
+        ciba_local_client_id: process.env.CIBA_LOCAL_CLIENT_ID, 
+        ciba_local_client_secret: process.env.CIBA_LOCAL_CLIENT_SECRET, 
+        ciba_masmovil_sta_client_id: process.env.CIBA_MASMOVIL_STA_CLIENT_ID, 
+        ciba_masmovil_sta_client_secret: process.env.CIBA_MASMOVIL_STA_CLIENT_SECRET, 
+        ciba_yoigo_sta_client_id: process.env.CIBA_YOIGO_STA_CLIENT_ID, 
+        ciba_yoigo_sta_client_secret: process.env.CIBA_YOIGO_STA_CLIENT_SECRET, 
         ciba_yoigo_pro_client_id: process.env.CIBA_YOIGO_PRO_CLIENT_ID, 
         ciba_yoigo_pro_client_secret: process.env.CIBA_YOIGO_PRO_CLIENT_SECRET, 
         masmovil_pro_client_id: process.env.MASMOVIL_PRO_CLIENT_ID, 
         masmovil_pro_client_secret: process.env.MASMOVIL_PRO_CLIENT_SECRET,
+        yoigo_local_camara_client_id: process.env.YOIGO_LOCAL_CAMARA_CLIENT_ID, 
+        yoigo_local_camara_client_secret: process.env.YOIGO_LOCAL_CAMARA_CLIENT_SECRET, 
+        yoigo_dev_authz_code_client_id: process.env.YOIGO_DEV_AUTHZ_CODE_CLIENT_ID, 
+        yoigo_dev_authz_code_client_secret: process.env.YOIGO_DEV_AUTHZ_CODE_CLIENT_SECRET, 
+
+        agents_prepaid_sta_client_id: process.env.AGENTS_PREPAID_STA_CLIENT_ID,
+        agents_prepaid_sta_client_secret: process.env.AGENTS_PREPAID_STA_CLIENT_SECRET,
+        agents_prepaid_pro_client_id: process.env.AGENTS_PREPAID_PRO_CLIENT_ID,
+        agents_prepaid_pro_client_secret: process.env.AGENTS_PREPAID_PRO_CLIENT_SECRET,
+
+        yoigo_sta_camara_client_id: process.env.YOIGO_STA_CAMARA_CLIENT_ID, 
+        yoigo_sta_camara_client_secret: process.env.YOIGO_STA_CAMARA_CLIENT_SECRET, 
+        yoigo_sta_authz_code_client_id: process.env.YOIGO_STA_AUTHZ_CODE_CLIENT_ID, 
+        yoigo_sta_authz_code_client_secret: process.env.YOIGO_STA_AUTHZ_CODE_CLIENT_SECRET, 
         yoigo_sta_device_code_client_id: process.env.YOIGO_STA_DEVICE_CODE_CLIENT_ID, 
         yoigo_sta_device_code_client_secret: process.env.YOIGO_STA_DEVICE_CODE_CLIENT_SECRET, 
         yoigo_pro_device_code_client_id: process.env.YOIGO_PRO_DEVICE_CODE_CLIENT_ID, 
@@ -39,12 +61,18 @@ app.get('/', (req, res) => {
         yoigo_pro_client_secret: process.env.YOIGO_PRO_CLIENT_SECRET,
         yoigo_pro_client_id: process.env.YOIGO_PRO_CLIENT_ID, 
         yoigo_pro_client_secret: process.env.YOIGO_PRO_CLIENT_SECRET,
+        masmovil_local_client_id: process.env.MASMOVIL_LOCAL_CLIENT_ID, 
+        masmovil_local_client_secret: process.env.MASMOVIL_LOCAL_CLIENT_SECRET,
         euskaltel_local_client_id: process.env.EUSKALTEL_LOCAL_CLIENT_ID, 
         euskaltel_local_client_secret: process.env.EUSKALTEL_LOCAL_CLIENT_SECRET,
         euskaltel_dev_client_id: process.env.EUSKALTEL_DEV_CLIENT_ID, 
         euskaltel_dev_client_secret: process.env.EUSKALTEL_DEV_CLIENT_SECRET,
         euskaltel_sta_client_id: process.env.EUSKALTEL_STA_CLIENT_ID, 
         euskaltel_sta_client_secret: process.env.EUSKALTEL_STA_CLIENT_SECRET,
+        jazztel_local_client_id: process.env.JAZZTEL_LOCAL_CLIENT_ID, 
+        jazztel_local_client_secret: process.env.JAZZTEL_LOCAL_CLIENT_SECRET,
+        jazztel_sta_fake_client_id: process.env.JAZZTEL_STA_FAKE_CLIENT_ID, 
+        jazztel_sta_fake_client_secret: process.env.JAZZTEL_STA_FAKE_CLIENT_SECRET,
         jazztel_sta_client_id: process.env.JAZZTEL_STA_CLIENT_ID, 
         jazztel_sta_client_secret: process.env.JAZZTEL_STA_CLIENT_SECRET,
         google_local_client_id: process.env.GOOGLE_LOCAL_CLIENT_ID, 
@@ -55,10 +83,23 @@ app.get('/', (req, res) => {
         google_sta_client_secret: process.env.GOOGLE_STA_CLIENT_SECRET,
         google_pro_client_id: process.env.GOOGLE_PRO_CLIENT_ID, 
         google_pro_client_secret: process.env.GOOGLE_PRO_CLIENT_SECRET,
+        ad_local_client_id: process.env.AD_LOCAL_CLIENT_ID, 
+        ad_local_client_secret: process.env.AD_LOCAL_CLIENT_SECRET,
+        ad_dev_client_id: process.env.AD_DEV_CLIENT_ID, 
+        ad_dev_client_secret: process.env.AD_DEV_CLIENT_SECRET,
+        ad_sta_client_id: process.env.AD_STA_CLIENT_ID, 
+        ad_sta_client_secret: process.env.AD_STA_CLIENT_SECRET,
+        ad_pro_client_id: process.env.AD_PRO_CLIENT_ID, 
+        ad_pro_client_secret: process.env.AD_PRO_CLIENT_SECRET,
         authn_host_local: process.env.AUTHN_HOST_LOCAL, 
+        authn_host_local_yoigo: process.env.AUTHN_HOST_LOCAL_YOIGO, 
+        authn_host_local_masmovil: process.env.AUTHN_HOST_LOCAL_MASMOVIL, 
         authn_host_dev: process.env.AUTHN_HOST_DEV, 
         authn_host_sta: process.env.AUTHN_HOST_STA, 
-        authn_host_pro: process.env.AUTHN_HOST_PRO});
+        authn_host_pro: process.env.AUTHN_HOST_PRO,
+        authn_host_pro_yoigo: process.env.AUTHN_HOST_PRO_YOIGO,
+        authn_host_pro_masmovil: process.env.AUTHN_HOST_PRO_MASMOVIL,
+    });
 });
 
 app.get('/authorize', (req, res) => {
@@ -73,7 +114,7 @@ app.get('/token-page', (req, res) => {
     console.log(token);
     const Logout_Endpoint = `${host}/oauth/logout`;
 
-    _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`http://${process.env.LOCAL_DOMAIN}:8000`)}&client_id=${client_id}`;
+    _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`${process.env.LOCAL_SCHEMA}://${process.env.LOCAL_DOMAIN}:${process.env.LOCAL_PORT}`)}&client_id=${client_id}`;
 
     let authnResponse = JSON.parse(token);
 
@@ -104,7 +145,8 @@ app.get('/check-device', async (req, res) => {
         const response = await fetch(Token_Endpoint, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-User-Agent-Alias': `${process.env.USER_AGENT_ALIAS}`,
             },
             body: new URLSearchParams({
                 'grant_type': 'urn:ietf:params:oauth:grant-type:device_code',
@@ -182,7 +224,10 @@ app.post('/ciba', (req, res) => {
     const Ciba_Endpoint = `${host}/bc-authorize`;
     const credentials = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 
-    let body = `login_hint=${username}&binding_message=${bindingMessage}&scope=any`;
+    let body = `login_hint=${username}&binding_message=${bindingMessage}&scope=${process.env.SCOPE}`;
+    if (process.env.SCOPE === undefined) {
+        body = `login_hint=${username}&binding_message=${bindingMessage}`;
+    }
 
     log.info(`host: ${host}`);
     log.info(`client_id: ${client_id}`);
@@ -258,9 +303,10 @@ app.get('/get/the/code', async (req, res) => {
 
     const Authorization_Endpoint = `${host}/oauth/authorize`;
     const Response_Type = 'code';
-    const Redirect_Uri_Default = `http://${process.env.LOCAL_DOMAIN}:8000/give/me/the/code`;
+    const Redirect_Uri_Default = `${process.env.LOCAL_SCHEMA}://${process.env.LOCAL_DOMAIN}:${process.env.LOCAL_PORT}/give/me/the/code`;
     const Scope = process.env.SCOPE;
     const State = `${uuid.v1()}`;
+    const Nonce = Math.random().toString(36).substring(2);
 
     log.info("redirect: " + process.env.REDIRECT_OVERRIDE)
 
@@ -270,14 +316,21 @@ app.get('/get/the/code', async (req, res) => {
         Redirect_Uri = process.env.REDIRECT_OVERRIDE;
     }
 
-    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}`;
-    // let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}`;
+    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}&nonce=${Nonce}&scope=${Scope}`;
+    if (process.env.SCOPE === undefined) {
+        url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}`;
+    }
+
 
     log.info(url);
+    log.info("*****************************");
+    log.info(Scope);
+    log.info("*****************************");
 
-    if (Scope == "number-verification-verify-read") {
+    if (Scope && Scope.includes("dpv:")) {
+        console.info("el scope tiene un proposito")
         const headers = {
-            'User-Identity-Forward-msisdn': '34636606875',
+            'x-network-verified-msisdn': `${process.env.CAMARA_MSISDN}`,
         };
 
         try {
@@ -289,6 +342,7 @@ app.get('/get/the/code', async (req, res) => {
             res.status(500).send('Error en la redirección');
         }
     } else {
+        console.info("el socpe NO tiene un proposito")
 
         res.redirect(url);
     }
@@ -298,7 +352,7 @@ app.get('/get/the/code', async (req, res) => {
 app.get('/give/me/the/code', (req, res) => {
     const Logout_Endpoint = `${host}/oauth/logout`;
 
-    _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`http://${process.env.LOCAL_DOMAIN}:8000`)}&client_id=${client_id}`;
+    _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`${process.env.LOCAL_SCHEMA}://${process.env.LOCAL_DOMAIN}:${process.env.LOCAL_PORT}`)}&client_id=${client_id}`;
     //before continue, you should check that req.query.state is the same that the state you sent
     res.render('exchange-code', { code: req.query.code, state: req.query.state, logout: _logout});
 });
@@ -309,7 +363,7 @@ app.post('/exchange/the/code/for/a/token', (req, res) => {
     const Token_Endpoint = `${host}/oauth/token`;
     const Grant_Type = 'authorization_code';
     const Code = req.body.code;
-    const Redirect_Uri_Default = `http://${process.env.LOCAL_DOMAIN}:8000/give/me/the/code`;
+    const Redirect_Uri_Default = `${process.env.LOCAL_SCHEMA}://${process.env.LOCAL_DOMAIN}:${process.env.LOCAL_PORT}/give/me/the/code`;
     const Scope = process.env.SCOPE;
 
     if (process.env.REDIRECT_OVERRIDE === undefined) {
@@ -326,13 +380,14 @@ app.post('/exchange/the/code/for/a/token', (req, res) => {
         method: 'POST',
         body: body,
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-User-Agent-Alias': `${process.env.USER_AGENT_ALIAS}`,
         }
     }).then(async response => {
 
         const Logout_Endpoint = `${host}/oauth/logout`;
     
-        _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`http://${process.env.LOCAL_DOMAIN}:8000`)}&client_id=${client_id}`;
+        _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`${process.env.LOCAL_SCHEMA}://${process.env.LOCAL_DOMAIN}:${process.env.LOCAL_PORT}`)}&client_id=${client_id}`;
 
         let authnResponse = await response.json();
 
@@ -363,7 +418,7 @@ app.get('/refresh_token', (req, res) => {
     const Grant_Type = 'refresh_token';
 
     const credentials = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
-    let body = `grant_type=${Grant_Type}&refresh_token=${refresh_token}`;
+    let body = `grant_type=${Grant_Type}&refresh_token=${refresh_token}&scope=openid`;
 
     log.info(`Body: ${body}`);
 
@@ -372,13 +427,14 @@ app.get('/refresh_token', (req, res) => {
         body: body,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+            'X-User-Agent-Alias': `${process.env.USER_AGENT_ALIAS}`,
             'Authorization': `Basic ${credentials}`
         }
     }).then(async response => {
 
         const Logout_Endpoint = `${host}/oauth/logout`;
     
-        _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`http://${process.env.LOCAL_DOMAIN}:8000`)}&client_id=${client_id}`;
+        _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`${process.env.LOCAL_SCHEMA}://${process.env.LOCAL_DOMAIN}:${process.env.LOCAL_PORT}`)}&client_id=${client_id}`;
 
         let authnResponse = await response.json();
 
@@ -455,4 +511,16 @@ app.post('/call/mas-stack', async (req, res) => {
     }
 });
 
-app.listen(process.env.PORT || 8000);
+// Configuración para HTTPS
+const httpsOptions = {
+    key: fs.readFileSync('./certs/key.pem'),
+    cert: fs.readFileSync('./certs/cert.pem')
+};
+
+const PORT = process.env.PORT || 8000;
+const HTTPS_PORT = process.env.HTTPS_PORT || 8443;
+
+// Crear y levantar el servidor HTTPS
+https.createServer(httpsOptions, app).listen(HTTPS_PORT, () => {
+    log.info(`Servidor HTTPS corriendo en el puerto ${HTTPS_PORT}`);
+});
