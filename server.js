@@ -220,13 +220,14 @@ app.get('/ciba', (req, res) => {
 app.post('/ciba', (req, res) => {
     username = req.body.username;
     bindingMessage = req.body.binding_message;
+    locale = req.body.locale;
 
     const Ciba_Endpoint = `${host}/bc-authorize`;
     const credentials = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 
-    let body = `login_hint=${username}&binding_message=${bindingMessage}&scope=${process.env.SCOPE}`;
+    let body = `login_hint=${username}&binding_message=${bindingMessage}&scope=${process.env.SCOPE}&acr_values=locale:${locale}`;
     if (process.env.SCOPE === undefined) {
-        body = `login_hint=${username}&binding_message=${bindingMessage}`;
+        body = `login_hint=${username}&binding_message=${bindingMessage}&acr_values=locale:${locale}`;
     }
 
     log.info(`host: ${host}`);
