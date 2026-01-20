@@ -118,40 +118,44 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-    <!-- Script to extract tokens from URL fragment (Hybrid Flow) -->
+    <!-- Script to extract tokens from URL fragment or query parameters (Hybrid Flow) -->
     <script>
         (function() {
-            // Get the URL fragment (everything after #)
+            let params;
+
+            // First, try to get from URL fragment (everything after #)
             const fragment = window.location.hash.substring(1);
 
             if (fragment) {
-                // Parse the fragment parameters
-                const params = new URLSearchParams(fragment);
+                params = new URLSearchParams(fragment);
+            } else {
+                // If no fragment, try query parameters (everything after ?)
+                params = new URLSearchParams(window.location.search);
+            }
 
-                const accessToken = params.get('access_token');
-                const idToken = params.get('id_token');
-                const tokenType = params.get('token_type');
-                const expiresIn = params.get('expires_in');
+            const accessToken = params.get('access_token');
+            const idToken = params.get('id_token');
+            const tokenType = params.get('token_type');
+            const expiresIn = params.get('expires_in');
 
-                // If we have tokens, display them
-                if (accessToken || idToken) {
-                    document.getElementById('hybridTokensSection').style.display = 'block';
+            // If we have tokens, display them
+            if (accessToken || idToken) {
+                document.getElementById('hybridTokensSection').style.display = 'block';
 
-                    if (accessToken) {
-                        document.getElementById('accessTokenDisplay').textContent = accessToken;
-                    }
+                if (accessToken) {
+                    document.getElementById('accessTokenDisplay').textContent = accessToken;
+                }
 
-                    if (idToken) {
-                        document.getElementById('idTokenDisplay').textContent = idToken;
-                    }
+                if (idToken) {
+                    document.getElementById('idTokenDisplay').textContent = idToken;
+                }
 
-                    if (tokenType) {
-                        document.getElementById('tokenTypeDisplay').textContent = tokenType;
-                    }
+                if (tokenType) {
+                    document.getElementById('tokenTypeDisplay').textContent = tokenType;
+                }
 
-                    if (expiresIn) {
-                        document.getElementById('expiresInDisplay').textContent = expiresIn + ' seconds';
-                    }
+                if (expiresIn) {
+                    document.getElementById('expiresInDisplay').textContent = expiresIn + ' seconds';
                 }
             }
         })();
