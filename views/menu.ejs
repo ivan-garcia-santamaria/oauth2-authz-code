@@ -20,13 +20,41 @@
             <p class="lead">You need an Authn server to perform this flow.</p>
         </div>
 
+        <hr><h4>LOCAL</h4></hr>
         <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Camara Local</h5>
+                        <p class="card-text">Authenticates using device code locally.</p>
+                        <a href="/authorize?client_id=<%= yoigo_local_camara_client_id %>&client_secret=<%= yoigo_local_camara_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Camara flow</a>
+                    </div>
+                </div>
+            </div>
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Device Code Local</h5>
                         <p class="card-text">Authenticates using device code locally.</p>
                         <a href="/device-code?client_id=<%= device_code_local_client_id %>&client_secret=<%= device_code_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Device code flow</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Device Code Local Alias Yoigo</h5>
+                        <p class="card-text">Authenticates using device code locally.</p>
+                        <a href="/device-code?client_id=<%= device_code_local_client_id %>&client_secret=<%= device_code_local_client_secret %>&host=<%= authn_host_local_yoigo %>" class="btn btn-primary">Device code flow</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Device Code Local Alias Masmovil</h5>
+                        <p class="card-text">Authenticates using device code locally.</p>
+                        <a href="/device-code?client_id=<%= device_code_local_client_id %>&client_secret=<%= device_code_local_client_secret %>&host=<%= authn_host_local_masmovil %>" class="btn btn-primary">Device code flow</a>
                     </div>
                 </div>
             </div>
@@ -42,60 +70,225 @@
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Euskaltel LOCAL</h5>
-                        <p class="card-text">Authenticates using Euskaltel LOCAL.</p>
-                        <a href="/authorize?client_id=<%= euskaltel_local_client_id %>&client_secret=<%= euskaltel_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
+                        <h5 class="card-title">CIBA</h5>
+                        <p class="card-text">CIBA Flow</p>
+                        <a target="_blank" href="/ciba?client_id=<%= ciba_local_client_id %>&client_secret=<%= ciba_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Ciba flow</a>
                     </div>
                 </div>
             </div>
         </div>
+        <hr><h4>DEV</h4></hr>
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Device Code STA</h5>
-                        <p class="card-text">Authenticates using device code locally.</p>
-                        <a href="/device-code?client_id=<%= yoigo_sta_device_code_client_id %>&client_secret=<%= yoigo_sta_device_code_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Device code flow</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Device Code PROD</h5>
-                        <p class="card-text">Authenticates using device code locally.</p>
-                        <a href="/device-code?client_id=<%= yoigo_pro_device_code_client_id %>&client_secret=<%= yoigo_pro_device_code_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Device code flow</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Euskaltel DEV</h5>
-                        <p class="card-text">Authenticates using Euskaltel DEV.</p>
-                        <a href="/authorize?client_id=<%= euskaltel_dev_client_id %>&client_secret=<%= euskaltel_dev_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Google DEV</h5>
+                        <h5 class="card-title">Google</h5>
                         <p class="card-text">Authenticates using Google DEV.</p>
                         <a href="/authorize?client_id=<%= google_dev_client_id %>&client_secret=<%= google_dev_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
                     </div>
                 </div>
             </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Yoigo Authz</h5>
+                        <p class="card-text">Authenticates using authz code.</p>
+                        <a href="/authorize?client_id=<%= yoigo_dev_authz_code_client_id %>&client_secret=<%= yoigo_dev_authz_code_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Device Code Yoigo</h5>
+                        <p class="card-text">Authenticates using device code.</p>
+                        <a href="/device-code?client_id=<%= yoigo_dev_authz_code_client_id %>&client_secret=<%= yoigo_dev_authz_code_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Device code</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr><h4>STA</h4></hr>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google STA</h5>
+                        <p class="card-text">Authenticates using Google STA.</p>
+                        <a target="_blank" href="/authorize?client_id=<%= google_sta_client_id %>&client_secret=<%= google_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">AD</h5>
+                        <p class="card-text">Authenticates using AD.</p>
+                        <a target="_blank" href="/authorize?client_id=<%= ad_dev_client_id %>&client_secret=<%= ad_dev_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Yoigo Authz</h5>
+                        <p class="card-text">Authenticates using authz-code.</p>
+                        <a target="_blank" href="/authorize?client_id=<%= yoigo_sta_authz_code_client_id %>&client_secret=<%= yoigo_sta_authz_code_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Yoigo Device Code</h5>
+                        <p class="card-text">Authenticates using device code.</p>
+                        <a target="_blank" href="/device-code?client_id=<%= yoigo_sta_authz_code_client_id %>&client_secret=<%= yoigo_sta_authz_code_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Device code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">CIBA STA</h5>
+                        <p class="card-text">CIBA Flow using Yoigo.</p>
+                        <a target="_blank" href="/ciba?client_id=<%= ciba_yoigo_sta_client_id %>&client_secret=<%= ciba_yoigo_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Ciba flow</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">CIBA STA</h5>
+                        <p class="card-text">CIBA Flow using Masmovil.</p>
+                        <a target="_blank" href="/ciba?client_id=<%= ciba_masmovil_sta_client_id %>&client_secret=<%= ciba_masmovil_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Ciba flow</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Agents Prepaid STA</h5>
+                        <p class="card-text">Authenticates using authz-code.</p>
+                        <a target="_blank" href="/authorize?client_id=<%= agents_prepaid_sta_client_id %>&client_secret=<%= agents_prepaid_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr><h4>PROD</h4></hr>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">AD PROD</h5>
+                        <p class="card-text">Authenticates using AD PRO (RPA Redes).</p>
+                        <a target="_blank" href="/authorize?client_id=<%= ad_pro_client_id %>&client_secret=<%= ad_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google PROD</h5>
+                        <p class="card-text">Authenticates using Google PRO.</p>
+                        <a target="_blank" href="/authorize?client_id=<%= google_pro_client_id %>&client_secret=<%= google_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Masmovil</h5>
+                        <p class="card-text">Authenticates using Masmovil</p>
+                        <a target="_blank" href="/authorize?client_id=<%= masmovil_pro_client_id %>&client_secret=<%= masmovil_pro_client_secret %>&host=<%= authn_host_pro_masmovil %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Masmovil Device Code</h5>
+                        <p class="card-text">Authenticates using Masmovil.</p>
+                        <a target="_blank" href="/device-code?client_id=<%= masmovil_pro_client_id %>&client_secret=<%= masmovil_pro_client_secret %>&host=<%= authn_host_pro_masmovil %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Yoigo</h5>
+                        <p class="card-text">Authenticates using Yoigo Truphone PRO.</p>
+                        <a target="_blank" href="/authorize?client_id=<%= yoigo_pro_client_id %>&client_secret=<%= yoigo_pro_client_secret %>&host=<%= authn_host_pro_yoigo %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Yoigo Device Code</h5>
+                        <p class="card-text">Authenticates using Yoigo.</p>
+                        <a target="_blank" href="/device-code?client_id=<%= yoigo_pro_client_id %>&client_secret=<%= yoigo_pro_client_secret %>&host=<%= authn_host_pro_yoigo %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">CIBA PROD</h5>
+                        <p class="card-text">CIBA Flow using Yoigo.</p>
+                        <a target="_blank" href="/ciba?client_id=<%= ciba_yoigo_pro_client_id %>&client_secret=<%= ciba_yoigo_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Ciba flow</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Agents Prepaid PROD</h5>
+                        <p class="card-text">Authenticates using authz-code.</p>
+                        <a target="_blank" href="/authorize?client_id=<%= agents_prepaid_pro_client_id %>&client_secret=<%= agents_prepaid_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr><h4>Rubbish</h4></hr>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Masmovil Local</h5>
+                        <p class="card-text">Authenticates using Jazztel local.</p>
+                        <a href="/authorize?client_id=<%= masmovil_local_client_id %>&client_secret=<%= masmovil_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Masmovil STA ---</h5>
+                        <p class="card-text">Authenticates using Masmovil ragnarok STA ---.</p>
+                        <a href="/authorize?client_id=<%= jazztel_sta_fake_client_id %>&client_secret=<%= jazztel_sta_fake_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Euskaltel STA</h5>
-                        <p class="card-text">Authenticates using Euskaltel eCare STA.</p>
-                        <a href="/authorize?client_id=<%= euskaltel_sta_client_id %>&client_secret=<%= euskaltel_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
+                        <h5 class="card-title">Jazztel Local</h5>
+                        <p class="card-text">Authenticates using Jazztel local.</p>
+                        <a href="/authorize?client_id=<%= jazztel_local_client_id %>&client_secret=<%= jazztel_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Jazztel STA Fake</h5>
+                        <p class="card-text">Authenticates using Jazztel ragnarok STA fake.</p>
+                        <a href="/authorize?client_id=<%= jazztel_sta_fake_client_id %>&client_secret=<%= jazztel_sta_fake_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
                     </div>
                 </div>
             </div>
@@ -103,7 +296,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Jazztel STA</h5>
-                        <p class="card-text">Authenticates using Euskaltel eCare STA.</p>
+                        <p class="card-text">Authenticates using Jazztel eCare STA.</p>
                         <a href="/authorize?client_id=<%= jazztel_sta_client_id %>&client_secret=<%= jazztel_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
                     </div>
                 </div>
@@ -113,10 +306,19 @@
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Google LOCAL</h5>
-                        <p class="card-text">Authenticates using Google LOCAL.</p>
-                        <a href="/authorize?client_id=<%= google_local_client_id %>&client_secret=<%= google_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
+                        <h5 class="card-title">Euskaltel LOCAL</h5>
+                        <p class="card-text">Authenticates using Euskaltel LOCAL.</p>
+                        <a href="/authorize?client_id=<%= euskaltel_local_client_id %>&client_secret=<%= euskaltel_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
                     </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Euskaltel DEV</h5>
+                        <p class="card-text">Authenticates using Euskaltel DEV.</p>
+                        <a href="/authorize?client_id=<%= euskaltel_dev_client_id %>&client_secret=<%= euskaltel_dev_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
+                  </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4 mb-4">
@@ -149,6 +351,35 @@
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="card-title">Euskaltel STA</h5>
+                        <p class="card-text">Authenticates using Euskaltel eCare STA.</p>
+                        <a href="/authorize?client_id=<%= euskaltel_sta_client_id %>&client_secret=<%= euskaltel_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google LOCAL</h5>
+                        <p class="card-text">Authenticates using Google LOCAL.</p>
+                        <a href="/authorize?client_id=<%= google_local_client_id %>&client_secret=<%= google_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google DEV</h5>
+                        <p class="card-text">Authenticates using Google DEV.</p>
+                        <a href="/authorize?client_id=<%= google_dev_client_id %>&client_secret=<%= google_dev_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
                         <h5 class="card-title">Google PROD</h5>
                         <p class="card-text">Authenticates using Google PRO.</p>
                         <a href="/authorize?client_id=<%= google_pro_client_id %>&client_secret=<%= google_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
@@ -160,45 +391,30 @@
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Yoigo Truphone PROD</h5>
-                        <p class="card-text">Authenticates using Yoigo Truphone PRO.</p>
-                        <a href="/authorize?client_id=<%= yoigo_pro_client_id %>&client_secret=<%= yoigo_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                        <h5 class="card-title">AD LOCAL</h5>
+                        <p class="card-text">Authenticates using AD LOCAL.</p>
+                        <a href="/authorize?client_id=<%= ad_local_client_id %>&client_secret=<%= ad_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Authz code</a>
                     </div>
                 </div>
             </div>
-
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Masmovil Ragnarok PROD</h5>
-                        <p class="card-text">Authenticates using Masmovil Ragnarok PRO.</p>
-                        <a href="/authorize?client_id=<%= masmovil_pro_client_id %>&client_secret=<%= masmovil_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                        <h5 class="card-title">AD DEV</h5>
+                        <p class="card-text">Authenticates using AD DEV.</p>
+                        <a href="/authorize?client_id=<%= ad_dev_client_id %>&client_secret=<%= ad_dev_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
                     </div>
                 </div>
             </div>
-
-        </div>
-        <div class="row">
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">CIBA STA</h5>
-                        <p class="card-text">CIBA Flow using Yoigo.</p>
-                        <a href="/ciba?client_id=<%= yoigo_pro_client_id %>&client_secret=<%= yoigo_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Authz code</a>
+                        <h5 class="card-title">AD STA</h5>
+                        <p class="card-text">Authenticates using AD STA.</p>
+                        <a href="/authorize?client_id=<%= ad_sta_client_id %>&client_secret=<%= ad_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
                     </div>
                 </div>
             </div>
-
-            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">CIBA PROD</h5>
-                        <p class="card-text">CIBA Flow using Yoigo.</p>
-                        <a href="/ciba?client_id=<%= ciba_yoigo_pro_client_id %>&client_secret=<%= ciba_yoigo_pro_client_secret %>&host=<%= authn_host_pro %>" class="btn btn-primary">Ciba flow</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
