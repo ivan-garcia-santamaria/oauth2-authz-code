@@ -332,46 +332,6 @@ app.get('/get/the/code', async (req, res) => {
     }
   
     log.info(url);
-
-    if (Scope == "number-verification-verify-read") {
-        const headers = {
-            'User-Identity-Forward-msisdn': '34636606875',
-        };
-
-        try {
-            const respuesta = await axios.get(url, { headers });
-
-            res.status(respuesta.status).send(respuesta.data);
-        } catch (error) {
-            console.error('Error en la solicitud de redirección:', error.message);
-            res.status(500).send('Error en la redirección');
-        }
-    } else {
-
-        res.redirect(url);
-    }
-});
-
-//Hybrid Flow: Ask the authorization code with id_token and token
-app.get('/get/the/code/hybrid', async (req, res) => {
-
-    const Authorization_Endpoint = `${host}/oauth/authorize`;
-    const Response_Type = 'code id_token token';
-    const Redirect_Uri_Default = `http://${process.env.LOCAL_DOMAIN}:8000/give/me/the/code`;
-    const Scope = process.env.SCOPE;
-    const State = `${uuid.v1()}`;
-
-    log.info("redirect: " + process.env.REDIRECT_OVERRIDE)
-
-    if (process.env.REDIRECT_OVERRIDE === undefined) {
-        Redirect_Uri = Redirect_Uri_Default;
-    }else {
-        Redirect_Uri = process.env.REDIRECT_OVERRIDE;
-    }
-
-    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}&scope=openid&nonce=n-0S6_WzA2Mj`;
-
-    log.info(url);
     log.info("*****************************");
     log.info(Scope);
     log.info("*****************************");
@@ -391,10 +351,40 @@ app.get('/get/the/code/hybrid', async (req, res) => {
             res.status(500).send('Error en la redirección');
         }
     } else {
-        console.info("el socpe NO tiene un proposito")
+        console.info("el scope NO tiene un proposito")
 
         res.redirect(url);
     }
+});
+
+//Hybrid Flow: Ask the authorization code with id_token and token
+app.get('/get/the/code/hybrid', async (req, res) => {
+
+    const Authorization_Endpoint = `${host}/oauth/authorize`;
+    const Response_Type = 'code id_token token';
+    const Redirect_Uri_Default = `https://${process.env.LOCAL_DOMAIN}:${HTTPS_PORT}/give/me/the/code`;
+    const Scope = process.env.SCOPE;
+    const State = `${uuid.v1()}`;
+
+    log.info("redirect: " + process.env.REDIRECT_OVERRIDE)
+
+    if (process.env.REDIRECT_OVERRIDE === undefined) {
+        Redirect_Uri = Redirect_Uri_Default;
+    }else {
+        Redirect_Uri = process.env.REDIRECT_OVERRIDE;
+    }
+
+    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}&scope=openid&nonce=n-0S6_WzA2Mj`;
+
+    log.info(url);
+    log.info("*****************************");
+    log.info(Scope);
+    log.info("*****************************");
+
+
+
+        res.redirect(url);
+
 });
 
 //Step 2: Get the code from the URL
