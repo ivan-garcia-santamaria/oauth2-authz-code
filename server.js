@@ -393,7 +393,9 @@ app.get('/give/me/the/code', (req, res) => {
 
     _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`${process.env.LOCAL_SCHEMA}://${process.env.LOCAL_DOMAIN}:${process.env.LOCAL_PORT}`)}&client_id=${client_id}`;
     //before continue, you should check that req.query.state is the same that the state you sent
-    res.render('exchange-code', { code: req.query.code, state: req.query.state, logout: _logout});
+    // In hybrid flow, code and state come in URL fragment (not query params), so they will be undefined here
+    // The client-side JavaScript will extract them from the fragment
+    res.render('exchange-code', { code: req.query.code || '', state: req.query.state || '', logout: _logout});
 });
 
 //Step 3: Exchange the code for a token

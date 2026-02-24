@@ -70,11 +70,11 @@
                     <form action="/exchange/the/code/for/a/token" method="POST">
                         <div class="card-body">
                             <p class="card-text">This is your authentication code:</p>
-                            <pre class="language-http"><%= code %></pre>
-                            <input type="hidden" name="code" value="<%=code %>" />
+                            <pre class="language-http" id="codeDisplay"><%= code %></pre>
+                            <input type="hidden" name="code" id="codeInput" value="<%=code %>" />
                             <p class="card-text">And this is the state that it returned from the authorization server:
                             </p>
-                            <pre class="language-http"><%= state %></pre>
+                            <pre class="language-http" id="stateDisplay"><%= state %></pre>
 
                             <!-- Hybrid Flow tokens section -->
                             <div id="hybridTokensSection" style="display: none;">
@@ -133,10 +133,22 @@
                 params = new URLSearchParams(window.location.search);
             }
 
+            const code = params.get('code');
+            const state = params.get('state');
             const accessToken = params.get('access_token');
             const idToken = params.get('id_token');
             const tokenType = params.get('token_type');
             const expiresIn = params.get('expires_in');
+
+            // Update code and state if they come from fragment (Hybrid Flow)
+            if (code) {
+                document.getElementById('codeDisplay').textContent = code;
+                document.getElementById('codeInput').value = code;
+            }
+
+            if (state) {
+                document.getElementById('stateDisplay').textContent = state;
+            }
 
             // If we have tokens, display them
             if (accessToken || idToken) {
