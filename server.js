@@ -4,8 +4,10 @@ const express = require('express'),
     https = require('https'),
     fs = require('fs'),
     bodyParser = require('body-parser'),
-    fetch = require("node-fetch");
     axios = require('axios');
+
+const fetch = require('node-fetch').default;
+
 
 //Load values from .env file
 require('dotenv').config();
@@ -107,6 +109,13 @@ app.get('/authorize', (req, res) => {
     client_secret = req.query.client_secret;
     host = req.query.host;
     res.render('index');
+});
+
+app.get('/authorize-hybrid', (req, res) => {
+    client_id = req.query.client_id;
+    client_secret = req.query.client_secret;
+    host = req.query.host;
+    res.render('index-hybrid');
 });
 
 app.get('/token-page', (req, res) => {
@@ -298,7 +307,7 @@ app.get('/check-ciba', async (req, res) => {
     }
 });
 
-//Set 1: Ask the authorization code
+//Set 1: Ask the authorization code (Standard flow)
 app.get('/get/the/code', async (req, res) => {
 
 
@@ -317,12 +326,11 @@ app.get('/get/the/code', async (req, res) => {
         Redirect_Uri = process.env.REDIRECT_OVERRIDE;
     }
 
-    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}&nonce=${Nonce}&scope=${Scope}`;
+   let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}&nonce=${Nonce}&scope=${Scope}`;
     if (process.env.SCOPE === undefined) {
         url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}`;
     }
-
-
+  
     log.info(url);
     log.info("*****************************");
     log.info(Scope);
@@ -343,10 +351,40 @@ app.get('/get/the/code', async (req, res) => {
             res.status(500).send('Error en la redirección');
         }
     } else {
-        console.info("el socpe NO tiene un proposito")
+        console.info("el scope NO tiene un proposito")
 
         res.redirect(url);
     }
+});
+
+//Hybrid Flow: Ask the authorization code with id_token and token
+app.get('/get/the/code/hybrid', async (req, res) => {
+
+    const Authorization_Endpoint = `${host}/oauth/authorize`;
+    const Response_Type = 'code id_token token';
+    const Redirect_Uri_Default = `https://${process.env.LOCAL_DOMAIN}:${HTTPS_PORT}/give/me/the/code`;
+    const Scope = process.env.SCOPE;
+    const State = `${uuid.v1()}`;
+
+    log.info("redirect: " + process.env.REDIRECT_OVERRIDE)
+
+    if (process.env.REDIRECT_OVERRIDE === undefined) {
+        Redirect_Uri = Redirect_Uri_Default;
+    }else {
+        Redirect_Uri = process.env.REDIRECT_OVERRIDE;
+    }
+
+    let url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${client_id}&redirect_uri=${Redirect_Uri}&state=${State}&groups_hint=${process.env.GROUPS_HINT}&login_hint=${process.env.LOGIN_HINT}&access_type=${process.env.ACCESS_TYPE}&scope=openid&nonce=n-0S6_WzA2Mj`;
+
+    log.info(url);
+    log.info("*****************************");
+    log.info(Scope);
+    log.info("*****************************");
+
+
+
+        res.redirect(url);
+
 });
 
 //Step 2: Get the code from the URL
@@ -355,7 +393,9 @@ app.get('/give/me/the/code', (req, res) => {
 
     _logout = `${Logout_Endpoint}?continue=${encodeURIComponent(`${process.env.LOCAL_SCHEMA}://${process.env.LOCAL_DOMAIN}:${process.env.LOCAL_PORT}`)}&client_id=${client_id}`;
     //before continue, you should check that req.query.state is the same that the state you sent
-    res.render('exchange-code', { code: req.query.code, state: req.query.state, logout: _logout});
+    // In hybrid flow, code and state come in URL fragment (not query params), so they will be undefined here
+    // The client-side JavaScript will extract them from the fragment
+    res.render('exchange-code', { code: req.query.code || '', state: req.query.state || '', logout: _logout});
 });
 
 //Step 3: Exchange the code for a token

@@ -70,6 +70,24 @@
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="card-title">Authz-code Hybrid Flow LOCAL</h5>
+                        <p class="card-text">OpenID Connect Hybrid Flow LOCAL.</p>
+                        <a href="/authorize-hybrid?client_id=<%= device_code_local_client_id %>&client_secret=<%= device_code_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Hybrid Flow</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google Hybrid Flow LOCAL</h5>
+                        <p class="card-text">OpenID Connect Hybrid Flow with Google LOCAL.</p>
+                        <a href="/authorize-hybrid?client_id=<%= google_local_client_id %>&client_secret=<%= google_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Hybrid Flow</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
                         <h5 class="card-title">CIBA</h5>
                         <p class="card-text">CIBA Flow</p>
                         <a target="_blank" href="/ciba?client_id=<%= ciba_local_client_id %>&client_secret=<%= ciba_local_client_secret %>&host=<%= authn_host_local %>" class="btn btn-primary">Ciba flow</a>
@@ -318,6 +336,15 @@
                         <h5 class="card-title">Euskaltel DEV</h5>
                         <p class="card-text">Authenticates using Euskaltel DEV.</p>
                         <a href="/authorize?client_id=<%= euskaltel_dev_client_id %>&client_secret=<%= euskaltel_dev_client_secret %>&host=<%= authn_host_dev %>" class="btn btn-primary">Authz code</a>
+                  </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Google STA</h5>
+                        <p class="card-text">Authenticates using Google STA.</p>
+                        <a href="/authorize?client_id=<%= google_sta_client_id %>&client_secret=<%= google_sta_client_secret %>&host=<%= authn_host_sta %>" class="btn btn-primary">Authz code</a>
                     </div>
                 </div>
             </div>

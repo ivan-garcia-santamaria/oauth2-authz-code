@@ -15,7 +15,7 @@ npm install express
 npm install uuid
 ```
 # Authn
-Create a new app with its client with grant type authorization code with redirect-url: http://localhost:8000/give/me/the/code. And config this values in the `.env` file.
+Create a new app with its client with grant type authorization code with redirect-url: https://localhost:8443/give/me/the/code. And config this values in the `.env` file.
 
 You can also decrypt the env.enc file as follows: `sops -d env.enc > .env`
 
